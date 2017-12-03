@@ -49,13 +49,22 @@
             <a class="navbar-brand" href="index.html">JPA Navigator</a>
         </div>
 
-        <div class="navbar-default sidebar" role="navigation">
+        <div class="navbar-default sidebar jpaExplorer-leftMenu" role="navigation" >
             <div class="sidebar-nav navbar-collapse">
-                <ul class="nav" id="side-menu" data-bind="foreach: entityTypes">
-                    <li>
-                        <a><i class="fa fa-code fa-fw"></i> <span data-bind="text: entityName"></span> </a>
-                    </li>
-                </ul>
+                <!--<ul class="nav" id="side-menu" data-bind="foreach: entityTypes">-->
+                    <div class="container-fluid" data-bind="foreach: entityTypes">
+                        <div class="navbar-header">
+                            <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-5" aria-expanded="false">
+                                </button>  <a href="#" class="navbar-text"><i class="fa fa-code fa-fw"></i> <span  data-bind="text: entityName"></span></a>
+                        </div>
+                            <div class="collapse navbar-collapse">
+                                <p class="navbar-text navbar-right">
+                                    <a href="#" class="navbar-link" data-toggle="modal" title="Quick Info" data-target="#quickEntityDetailsDialog"
+                                            data-bind="click: $parent.selectEntityTypeForQuickView"><i class="fa fa-info-circle"></i></a>
+                                    <a href="#" class="navbar-link" data-toggle="tooltip" title="Open in a new tab"><i class="fa fa-arrow-circle-right"></i></a>
+                                </p>
+                            </div>
+                        </div>
             </div>
             <!-- /.sidebar-collapse -->
         </div>
@@ -142,6 +151,7 @@
                             </div>
                             <div class="tab-pane fade" id="profile">
                                 <h4>Profile Tab</h4>
+
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                                     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                                     exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
@@ -160,9 +170,33 @@
 
     </div>
     <!-- /#page-wrapper -->
+    <div class="modal fade" id="quickEntityDetailsDialog" tabindex="-1" role="dialog" aria-labelledby="quickEntityDetailsDialogTitle" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" data-bind="with: quickInfoEntity">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="quickEntityDetailsDialogTitle">Entity Quick Reference <strong data-bind="text: entityName" ></strong></h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Class: <strong data-bind="text: entityClass"></strong>
+                    </p>
+                    <ul data-bind="">
 
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 </div>
 <!-- /#wrapper -->
+
+
 
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -177,6 +211,7 @@
 <script src="sb-admin/js/sb-admin-2.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js"></script>
 <script type='text/javascript' src='js/jpqlQueryExecResult.js'></script>
+<script type='text/javascript' src='js/entityType.js'></script>
 <script type='text/javascript' src='js/viewModel.js'></script>
 </body>
 

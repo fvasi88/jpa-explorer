@@ -5,17 +5,25 @@ function JPAExplorerViewModel() {
     self.emptyJpqlQueryWarning = ko.observable(false);
     self.dirtyJpqlQueryBox = ko.observable(false);
     self.jpqlQueryExecResult = new JpqlQueryExecResultVM();
+    self.quickInfoEntity = ko.observable();
 
     self.entityTypes = ko.observable();
     $.ajax("api/entityType", {
         data: null,
         type: "get",
         contentType: "application/json",
-        success: function (allData) {
-            self.entityTypes(allData);
+        success: function (allEntityTypes) {
+            var entityTypes = [];
+
+            $.each(allEntityTypes, function(idx, entityType) {
+                entityTypes.push(new EntityType(entityType));
+            });
+            self.entityTypes(entityTypes);
         }
     });
-
+    self.selectEntityTypeForQuickView = function(entityType) {
+        self.quickInfoEntity(entityType);
+    }
     self.computeStatusStyle = ko.computed(function() {
 
         if(self.jpqlQueryExecResult.ran()) {
