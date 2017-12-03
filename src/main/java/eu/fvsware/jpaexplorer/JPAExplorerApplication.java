@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.SQLException;
 
+@SuppressWarnings("WeakerAccess")
 @SpringBootApplication
 @Controller
 @ComponentScan("eu.fvsware")
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 public class JPAExplorerApplication {
 
 	@Autowired
-    EmployeeRepository employeeRepository;
+	private EmployeeRepository employeeRepository;
 	
 	@RequestMapping(path = "/test")
 	@ResponseBody

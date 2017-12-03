@@ -2,7 +2,7 @@ package eu.fvsware.jpaexplorer.dto;
 
 public class FailedJpqlExecution extends JpqlQueryExecution {
 
-    private String errorMessage;
+    private final String errorMessage;
 
     public FailedJpqlExecution(String jpqlQuery, String nativeQuery, String errorMessage) {
         super(jpqlQuery, nativeQuery);

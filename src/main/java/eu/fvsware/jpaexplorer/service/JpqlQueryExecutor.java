@@ -47,12 +47,10 @@ public class JpqlQueryExecutor {
         } catch (Exception e) {
             return new FailedJpqlExecution(jpqlQuery, nativeQuery, e.getMessage());
         }
-
-
     }
 
     private String getNativeQuery(Query query) {
-        String hqlQueryString = query.unwrap(org.hibernate.Query.class).getQueryString();
+        String hqlQueryString = query.unwrap(org.hibernate.query.Query.class).getQueryString();
         ASTQueryTranslatorFactory queryTranslatorFactory = new ASTQueryTranslatorFactory();
         SessionImplementor hibernateSession = em.unwrap(SessionImplementor.class);
         QueryTranslator queryTranslator = queryTranslatorFactory.createQueryTranslator("", hqlQueryString, java.util.Collections.EMPTY_MAP, hibernateSession.getFactory(), null);

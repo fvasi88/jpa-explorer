@@ -1,8 +1,8 @@
 package eu.fvsware.jpaexplorer.dto;
 
 public abstract class JpqlQueryExecution {
-    private String jpqlQuery;
-    private String nativeQuery;
+    private final String jpqlQuery;
+    private final String nativeQuery;
 
     public JpqlQueryExecution(String jpqlQuery, String nativeQuery) {
         this.jpqlQuery = jpqlQuery;

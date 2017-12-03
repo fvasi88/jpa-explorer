@@ -6,10 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
-import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 import java.util.List;
-import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
