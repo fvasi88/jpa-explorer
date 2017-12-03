@@ -1,4 +1,4 @@
-package eu.fvsware.jpaexplorer;
+package eu.fvsware.jpaexplorer.service;
 
 import eu.fvsware.jpaexplorer.model.Employee;
 import org.springframework.data.repository.CrudRepository;

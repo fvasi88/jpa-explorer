@@ -21,11 +21,9 @@ public class Phone {
     @ManyToOne
     private Employee employee;
     
-    private String type;
 
-    public Phone(String number, String phoneType, Employee emp) {
+    public Phone(String number, Employee emp) {
         this.number = number;
-        this.type = phoneType;
         this.employee = emp;
     }
 
@@ -59,14 +57,6 @@ public class Phone {
         this.employee = emp;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String phoneType) {
-        this.type = phoneType;
-    }
-    
     
     
 }

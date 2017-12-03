@@ -1,94 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <title>Bookmarks frontend</title>
-            <!-- Latest compiled and minified CSS -->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
-        </head>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>JPA Explorer</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- MetisMenu CSS -->
+    <link href="sb-admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="sb-admin/css/sb-admin-2.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="sb-admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
 
 <body>
 
-<div class="container">
-    <h1>Hello</h1>
-    <input data-bind="value: helloWorldKO" />
-    <input data-bind="value: helloWorldRest" />
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">JPA Navigator</a>
+        </div>
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu" data-bind="foreach: entityTypes">
+                    <li>
+                        <a><i class="fa fa-code fa-fw"></i> <span data-bind="text: entityName"></span> </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+
+    <div id="page-wrapper">
+
+        <!-- /.row -->
+        <div class="row jpaMain">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#jpqlTster" data-toggle="tab">JPQL Tester</a>
+                            </li>
+                            <li><a href="#profile" data-toggle="tab">Profile</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active  panel-body" id="jpqlTster">
+                                <div class="row">
+                                    <form role="form">
+                                        <div class="col-lg-8">
+                                            <div class="panel panel-green">
+                                                <div class="panel-heading">
+                                                    <label>JPQL Query</label>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="alert alert-warning" data-bind="visible: emptyJpqlQueryWarning">
+                                                        <button type="button" class="close" aria-hidden="true"
+                                                                data-bind="click:dismissEmptyWarning">×</button>
+                                                        No query was entered.
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <textarea class="form-control" rows="10" placeholder="Enter JPQL Query and hit Execute"
+                                                                      data-bind="value: jpqlQuery" ></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row panel-body">
+                                                        <div class="col-lg-12">
+                                                            <button class="btn btn-primary btn-lg btn-block"
+                                                                    data-bind="click: executeQuery">Execute</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="panel"
+                                                 data-bind="css: computeStatusStyle">
+                                                <div class="panel-heading">
+                                                    <label>Native Query</label>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <textarea class="form-control" rows="10" disabled="disabled"
+                                                              data-bind="value: jpqlQueryExecResult.nativeQuery"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel"
+                                             data-bind="css: computeStatusStyle"
+                                        >
+                                            <div class="panel-heading">
+                                                <label>Result</label>
+                                            </div>
+                                            <div class="panel-body">
+                                                <textarea class="form-control" rows="15" disabled="disabled"
+                                                          data-bind="value: jpqlQueryExecResult.result"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile">
+                                <h4>Profile Tab</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                                    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                                    deserunt mollit anim id est laborum.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /#page-wrapper -->
+
 </div>
+<!-- /#wrapper -->
 
-<!--<div class="container">-->
-    <!--<h1>My bookmarks</h1>-->
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <!--<form data-bind="submit: addBookmark" class="form-horizontal">-->
-        <!--<div class="form-group">-->
-            <!--<label for="inputUrl" class="col-sm-2 control-label">Url</label>-->
+<!-- Bootstrap Core JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-            <!--<div class="col-sm-10">-->
-                <!--<input data-bind="value: newUrl" type="text" class="form-control" id="inputUrl" placeholder="Url">-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label for="inputNote" class="col-sm-2 control-label">Note</label>-->
+<!-- Metis Menu Plugin JavaScript -->
+<script src="sb-admin/vendor/metisMenu/metisMenu.min.js"></script>
 
-            <!--<div class="col-sm-10">-->
-                <!--<input data-bind="value: newNote" type="text" class="form-control" id="inputNote"-->
-                       <!--placeholder="Note (optional)">-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<div class="col-sm-offset-2 col-sm-10">-->
-                <!--<button type="submit" class="btn btn-default">Add</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</form>-->
-
-
-    <!--<table class="table table-condensed">-->
-        <!--<thead>-->
-        <!--<tr>-->
-            <!--<th></th>-->
-            <!--<th>Url</th>-->
-            <!--<th>Created</th>-->
-            <!--<th>Note</th>-->
-            <!--<th></th>-->
-        <!--</tr>-->
-        <!--</thead>-->
-        <!--<tbody data-bind="foreach: bookmarks">-->
-        <!--<tr>-->
-            <!--<td><a data-bind="attr: {href: url}">open</a></td>-->
-            <!--<td><input style="width: 100%" data-bind="value: url"/></td>-->
-            <!--<td><span data-bind="text: created"></span></td>-->
-            <!--<td><input style="width: 100%" data-bind="value: note"/></td>-->
-            <!--<td>-->
-                <!--<button type="button" class="btn btn-default btn-sm" data-bind="click: $root.updateBookmark">Update-->
-                <!--</button>-->
-            <!--</td>-->
-            <!--<td>-->
-                <!--<button type="button" class="btn btn-default btn-sm" data-bind="click: $root.deleteBookmark">Delete-->
-                <!--</button>-->
-            <!--</td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-    <!--</table>-->
-
-<!--</div>-->
-<!-- /.container -->
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="sb-admin/js/sb-admin-2.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js"></script>
+<script type='text/javascript' src='js/jpqlQueryExecResult.js'></script>
 <script type='text/javascript' src='js/viewModel.js'></script>
 </body>
-</html></title>
-</head>
-<body>
 
-</body>
 </html>

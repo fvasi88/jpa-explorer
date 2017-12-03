@@ -1,17 +1,15 @@
 package eu.fvsware.jpaexplorer;
 
-import eu.fvsware.jpaexplorer.model.Employee;
+import eu.fvsware.jpaexplorer.service.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.xml.crypto.Data;
 import java.sql.SQLException;
 
 @SpringBootApplication
@@ -21,7 +19,7 @@ import java.sql.SQLException;
 public class JPAExplorerApplication {
 
 	@Autowired
-	EmployeeRepository employeeRepository;
+    EmployeeRepository employeeRepository;
 	
 	@RequestMapping(path = "/test")
 	@ResponseBody

@@ -33,10 +33,7 @@ public class Employee {
     
     @ManyToOne
     private Employee manager;
-    
-    @ManyToMany(cascade= CascadeType.ALL)
-    private Collection<Project> projects = new ArrayList<>();
-    
+
     @OneToMany(mappedBy="manager")
     private Collection<Employee> directs = new ArrayList<>();
 
@@ -109,13 +106,6 @@ public class Employee {
         this.directs = directs;
     }
 
-    public Collection<Project> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(Collection<Project> projects) {
-        this.projects = projects;
-    }
     
     
 }
