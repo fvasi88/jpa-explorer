@@ -13,6 +13,7 @@ import java.util.Collection;
  * @author fvasi
  */
 @Entity
+@Access(AccessType.FIELD)
 public class Employee {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -74,6 +75,7 @@ public class Employee {
         this.address = address;
     }
 
+    @Access(AccessType.PROPERTY)
     public double getSalary() {
         return salary;
     }

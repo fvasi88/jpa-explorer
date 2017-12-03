@@ -181,7 +181,22 @@
                     <p>
                         Class: <strong data-bind="text: entityClass"></strong>
                     </p>
-                    <ul data-bind="">
+                    <p>
+                        Id: <strong data-bind="text: idInfo.idType + ' (' + idInfo.persistenceType + ')'"></strong>
+                    </p>
+                    <ul data-bind="foreach: attributes">
+                        <li>
+                            Name: <strong data-bind="text: name"></strong>
+                            <ul>
+                                <li data-bind="visible: $parent.entityName != declaringType">Declaring type: <span data-bind="text: declaringType"></span></li>
+                                <li data-bind="visible: name != memberName">Member name: <span data-bind="text: memberName"></span> </li>
+                                <li>Java type: <span data-bind="text: javaTypeName"></span> </li>
+                                <li>Persistence type: <span data-bind="text: persistentAttributeType"></span>
+                                    <input type="checkbox" data-bind="checked: collection" /> Collection
+                                    <input type="checkbox" data-bind="checked: association" /> Association
+                                </li>
+                            </ul>
+                        </li>
 
                     </ul>
                 </div>
