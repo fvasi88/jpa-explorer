@@ -1,7 +1,9 @@
 package eu.fvsware.jpaexplorer.controller;
 
+import eu.fvsware.jpaexplorer.dto.EntityAttributeMetaAndValues;
 import eu.fvsware.jpaexplorer.dto.EntityAttributeValueInfo;
 import eu.fvsware.jpaexplorer.dto.EntityAttributeValueInfoFactory;
+import eu.fvsware.jpaexplorer.dto.EntityTypeInfo;
 import eu.fvsware.jpaexplorer.model.Address;
 import eu.fvsware.jpaexplorer.model.Employee;
 import eu.fvsware.jpaexplorer.model.Phone;
@@ -14,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EntityType;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -49,6 +55,34 @@ public class EntityController {
             returnMap.put(attribute.getName(), EntityAttributeValueInfoFactory.getValue(entityManager, result, attribute));
         }
         return returnMap;
+    }
+
+    @RequestMapping("/{entityName}/{id}/single/{assoc}")
+    public EntityAttributeMetaAndValues getSingleAssociationData(@PathVariable("entityName") String entityName, @PathVariable("id")  String id, @PathVariable("assoc") String assoc) {
+        initialize();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery();
+        EntityType entityType = entityTypeService.getEntityByName(entityName);
+        Set<Attribute> attributes = entityType.getAttributes();
+        Attribute associationAttr = attributes
+                .stream()
+                .filter(attr -> attr.getName().equals(assoc))
+                .findFirst()
+                .get();
+        Root from = cq.from(entityType.getJavaType());
+        Object result = entityManager.find(entityType.getJavaType(), idTranslator(id, entityType));
+        cq.select(from.get(assoc));
+        cq.where(cb.equal(from, result));
+
+
+        Map<String, EntityAttributeValueInfo> returnMap = new HashMap<>();
+        List resultList = entityManager.createQuery(cq).getResultList();
+        EntityType assocEntity = entityTypeService.getEntityByName(associationAttr.getJavaType().getSimpleName());
+        Set<Attribute> attributes1 = assocEntity.getAttributes(); //TODO: FIX getSimpleName
+        for(Attribute attribute: attributes1) {
+            returnMap.put(attribute.getName(), EntityAttributeValueInfoFactory.getValue(entityManager, resultList.get(0), attribute));
+        }
+        return new EntityAttributeMetaAndValues(EntityTypeInfo.getFromEntityType(assocEntity), returnMap);
     }
 
     private Object idTranslator(String id, EntityType entityType) {

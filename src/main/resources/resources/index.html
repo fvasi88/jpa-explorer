@@ -178,6 +178,10 @@
                                             <span data-bind="visible: $parent.values()">
                                                 <span data-bind="text: lazyLoaded() ? 'Lazy Loaded <TBD>' : value"></span>
                                             </span>
+                                            <a data-bind="visible: association, click: loadAssociation"><i class="fa fa-download" aria-hidden="true"></i></a>
+                                            <!-- ko if: forceAssociationLoad -->
+                                                <div data-bind="template: { name: 'attribute-value-template', data: attributeEntityType }"></div>
+                                            <!-- /ko -->
                                         </li>
                                     </ul>
                                 </div>
@@ -234,7 +238,18 @@
 </div>
 <!-- /#wrapper -->
 
+<script type="text/html" id="attribute-value-template">
+    Id: <strong data-bind="text: id"></strong>
 
+    <ul data-bind="foreach: attributes">
+        <li>
+            <strong data-bind="text: name"></strong>
+            <span data-bind="visible: $parent.values()">
+                <span data-bind="text: lazyLoaded() ? 'Lazy Loaded <TBD>' : value"></span>
+            </span>
+        </li>
+    </ul>
+</script>
 
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
