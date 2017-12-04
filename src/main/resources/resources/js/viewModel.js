@@ -6,6 +6,7 @@ function JPAExplorerViewModel() {
     self.dirtyJpqlQueryBox = ko.observable(false);
     self.jpqlQueryExecResult = new JpqlQueryExecResultVM();
     self.quickInfoEntity = ko.observable();
+    self.selectedEntityTypes = ko.observableArray();
 
     self.entityTypes = ko.observable();
     $.ajax("api/entityType", {
@@ -23,6 +24,11 @@ function JPAExplorerViewModel() {
     });
     self.selectEntityTypeForQuickView = function(entityType) {
         self.quickInfoEntity(entityType);
+    }
+    self.openEntityTypeInNewTab = function(entityType) {
+        if(self.selectedEntityTypes().indexOf(entityType) == -1) {
+            self.selectedEntityTypes.push(entityType);
+        }
     }
     self.computeStatusStyle = ko.computed(function() {
 
@@ -64,13 +70,6 @@ function JPAExplorerViewModel() {
 
     }
 
-
-
-    /*
-    "jpqlQuery": "select e from Employee ",
-    "nativeQuery": null,
-    "successful": false,
-    "resultAsString"*/
 }
 
 
