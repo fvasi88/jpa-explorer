@@ -41,6 +41,9 @@ public class EntityController {
         Map<String, EntityAttributeValueInfo> returnMap = new HashMap<>();
         EntityType entityType = entityTypeService.getEntityByName(entityName);
         Object result = entityManager.find(entityType.getJavaType(), idTranslator(id, entityType));
+        if(result == null) {
+            throw  new IllegalArgumentException("No entity with that id found!");
+        }
         Set<Attribute> attributes = entityType.getAttributes();
         for(Attribute attribute: attributes) {
             returnMap.put(attribute.getName(), EntityAttributeValueInfoFactory.getValue(entityManager, result, attribute));
